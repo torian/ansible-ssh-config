@@ -1,0 +1,8 @@
+# << Ansible managed file >>
+
+[default]
+host_key_checking = True
+
+[ssh_connection]
+ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F .ssh/config
+

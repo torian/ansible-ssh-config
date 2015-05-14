@@ -1,0 +1,27 @@
+---
+#
+# Configuration for .ssh/config
+#  Each key defined under ssh_config will behave
+#  like a Host entry in the ssh_config file.
+#
+#  If you use IdentityFile, make sure that the
+#  name of the key is the same as the one specified
+#  in the vault_ssh_keys var.
+#
+
+ssh_config:
+
+  jumpserver.foo.bar:
+    UserKnownHostsFile: /dev/null
+    StrictHostKeychecking: no
+    User: youruser
+    IdentityFile: .ssh/key_1
+
+  somehost.foo.bar:
+    UserKnownHostsFile: /dev/null
+    StrictHostKeychecking: no
+    ProxyCommand: ssh user@jumpserver.foo.bar -i .ssh/key_1 -p 22 nc %h %p
+    User: ubuntu
+    IdentityFile: .ssh/key_2
+
+# vi:ts=2:sw=2:et:ft=yaml

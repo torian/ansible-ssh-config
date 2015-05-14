@@ -1,0 +1,21 @@
+---
+
+#
+# Make sure this is actually am ansible vault file
+# created by with:
+#   $> ansible-vault create ssh_keys.yml
+#
+
+vault_ssh_keys:
+
+  key_1: |
+    -----BEGIN RSA PRIVATE KEY-----
+    Your private key here
+    -----END RSA PRIVATE KEY-----
+
+  key_2: |
+    -----BEGIN RSA PRIVATE KEY-----
+    Another key
+    -----END RSA PRIVATE KEY-----
+
+# vi:ts=2:sw=2:et:ft=yaml

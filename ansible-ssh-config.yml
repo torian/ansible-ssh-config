@@ -1,0 +1,51 @@
+---
+#
+# Initialize SSH configuration
+#  If you do not want to spend time configuring
+#  ssh each time you have to run a playbook
+#  you can first (and once), run this one
+#
+#  $> ansible-playbook ansible-ssh-config.yml -i localhost, --ask-vault-password
+#
+#  BEAWARE:
+#   This playbook will create a custom ./ansible.cfg (current path)
+#
+
+- name: Prepare SSH config
+  hosts: localhost
+  gather_facts: no
+
+  vars_files:
+    - vars/ssh_config.yml
+    - vars/vault/ssh_keys.yml
+
+  tasks:
+
+    - name: SSH directory
+      local_action: 
+        module: file
+          state=directory
+          name=.ssh
+          mode='0700'
+      
+    - name: SSH config
+      local_action: 
+        module: template
+          src=templates/ssh/config.j2
+          dest=.ssh/config
+
+    - name: SSH key
+      local_action: 
+        module: copy
+          dest=".ssh/{{item.key}}"
+          content="{{item.value}}"
+          mode='0600'
+      with_dict: vault_ssh_keys
+
+    - name: Ansible CFG
+      local_action: 
+        module: template
+          src=templates/ansible.cfg.j2
+          dest=./ansible.cfg
+
+# vi:ts=2:sw=2:et:ft=yaml
