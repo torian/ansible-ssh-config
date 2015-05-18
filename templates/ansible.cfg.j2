@@ -1,7 +1,8 @@
 # << Ansible managed file >>
 
-[default]
+[defaults]
 host_key_checking = True
+roles_path = roles:roles-galaxy
 
 [ssh_connection]
 ssh_args = -o ControlMaster=auto -o ControlPersist=60s -F .ssh/config
